@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# Claude Code statusline: model/effort/branch + context + 5h / weekly limit usage
-import json, sys, time, subprocess
+# Claude Code statusline: dir/model/effort/branch + context + 5h / weekly limit usage
+import json, os, sys, time, subprocess
 
 data = json.load(sys.stdin)
 
@@ -14,23 +14,18 @@ def git_branch(cwd):
     except Exception:
         return ""
 
-# 256-color palette — soft, readable tones
-def c(n):      return f"\033[38;5;{n}m"
-GREEN    = c(114)   # soft green
-AMBER    = c(179)   # warm amber
-RED      = c(174)   # soft red
-LABEL    = c(245)   # labels: light gray
-MUTED    = c(240)   # durations: faint gray
-SEP      = c(238)   # separator: very faint
-MODEL_C  = c(110)   # model: soft blue
-BRANCH_C = c(108)   # branch: soft green-gray
-RESET    = "\033[0m"
-
-def color(pct):
-    return RED if pct >= 90 else AMBER if pct >= 70 else GREEN
+# Grayscale hierarchy + a single orange accent
+def c(n): return f"\033[38;5;{n}m"
+ACCENT = c(173)   # percentages: Claude Code orange (~#d97757)
+BRIGHT = c(251)   # directory: most prominent
+FG     = c(246)   # model, branch: mid gray
+LABEL  = c(243)   # labels (ctx, 5h, Weekly): dimmer gray
+MUTED  = c(240)   # effort, durations: dim gray
+SEP    = c(238)   # separators: faintest
+RESET  = "\033[0m"
 
 def pct_str(pct):
-    return f"{color(pct)}{pct}%{RESET}"
+    return f"{ACCENT}{pct}%{RESET}"
 
 def fmt_reset(resets_at):
     diff = max(0, int(resets_at) - int(time.time()))
@@ -52,17 +47,24 @@ def limit_str(label, obj):
 
 lines = []
 
+cwd = data.get("workspace", {}).get("current_dir") or data.get("cwd") or ""
+home = os.path.expanduser("~")
+path = "~" + cwd[len(home):] if cwd.startswith(home) else cwd
+parts = [p for p in path.split("/") if p]
+dir_name = "/".join(parts[-2:])  # last two components, e.g. ~/dotfiles or dev/project
+
 model = data.get("model", {}).get("display_name", "?")
-prefix = f"{MODEL_C}{model}{RESET}"
+prefix = f"{FG}{model}{RESET}"
+if dir_name:
+    prefix = f"{BRIGHT}{dir_name}{RESET}  {SEP}|{RESET} " + prefix
 
 effort = data.get("effort", {}).get("level")
 if effort:
     prefix += f" {MUTED}{effort}{RESET}"
 
-cwd = data.get("workspace", {}).get("current_dir") or data.get("cwd")
 branch = git_branch(cwd)
 if branch:
-    prefix += f"  {SEP}|{RESET} {BRANCH_C}{branch}{RESET}"
+    prefix += f"  {SEP}|{RESET} {FG}{branch}{RESET}"
 
 ctx = int(data.get("context_window", {}).get("used_percentage", 0) or 0)
 lines.append(f"{prefix}  {LABEL}ctx{RESET} {pct_str(ctx)}")
