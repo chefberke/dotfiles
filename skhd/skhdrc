@@ -1,0 +1,31 @@
+# change window focus within space
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - h : yabai -m window --focus west
+alt - l : yabai -m window --focus east
+
+# rotate layout clockwise
+shift + alt - r : yabai -m space --rotate 270
+
+# flip along y-axis
+shift + alt - y : yabai -m space --mirror y-axis
+
+# flip along x-axis
+shift + alt - x : yabai -m space --mirror x-axis
+
+shift + alt - t : yabai -m window --toggle float --grid 12:12:1:1:10:10
+
+
+# -- Modifying Window Size --
+
+# maximize a window
+shift + alt - m : yabai -m window --toggle zoom-fullscreen
+
+# stop/start/restart yabai
+ctrl + alt - q : brew services stop yabai
+ctrl + alt - s : brew services start yabai
+ctrl + alt - r : brew services restart yabai
+
+# close focused window
+shift + alt - q : yabai -m window --close
+
