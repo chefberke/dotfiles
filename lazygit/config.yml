@@ -11,10 +11,13 @@ gui:
 
   # ── Layout: narrow sidebar, wide diff ─────────────────
   sidePanelWidth: 0.2
-  mainPanelSplitMode: flexible
-  # Expand the sidebar while it's focused, shrink it again on leave
-  expandFocusedSidePanel: true
-  expandedSidePanelWeight: 2
+  # Stack the staging view's two panes (unstaged over staged) instead of
+  # side-by-side, so each one keeps the full window width.
+  # Naming follows the arrangement direction: 'horizontal' = side by side.
+  mainPanelSplitMode: vertical
+  # Keep the diff panel at full width while browsing files — expanding the
+  # focused sidebar would shrink the preview exactly when it's being read
+  expandFocusedSidePanel: false
 
   # ── Less noise ────────────────────────────────────────
   showCommandLog: false
@@ -23,7 +26,7 @@ gui:
   # ── File list ─────────────────────────────────────────
   showFileTree: true
   showRootItemInFileTree: false
-  showNumstatInFilesView: true   # +x/-y per file
+  showNumstatInFilesView: true # +x/-y per file
   showDivergenceFromBaseBranch: arrowAndNumber
   showBranchCommitHash: true
 
@@ -73,6 +76,35 @@ refresher:
   # Refresh more often since Claude Code edits files in the background
   refreshInterval: 5
   fetchInterval: 60
+
+# ── Reading a diff ──────────────────────────────────────
+# The preview panel is rendered by delta, but <enter> leaves it: that opens
+# the staging view, which lazygit draws itself (it needs exact line positions
+# to stage individual lines) and therefore cannot use a pager. So:
+#   0        focus the main panel and scroll the delta diff (<esc> to leave)
+#   + / _    grow / shrink the panel (normal → half → fullscreen)
+#   | / \    cycle pagers: unified → side-by-side → raw git
+#   } / {    more / less context lines
+#   <c-v>    open the change in a full-screen delta pager (below)
+#   <enter>  only when you actually want to stage hunks or single lines
+customCommands:
+  - key: "<c-v>"
+    context: "files"
+    description: "View diff in delta (full screen)"
+    command: git -c core.pager='delta --side-by-side --paging=always' diff HEAD -- "{{.SelectedPath}}"
+    output: terminal
+
+  - key: "<c-v>"
+    context: "commits"
+    description: "View commit in delta (full screen)"
+    command: git -c core.pager='delta --side-by-side --paging=always' show "{{.SelectedLocalCommit.Hash}}"
+    output: terminal
+
+  - key: "<c-v>"
+    context: "commitFiles"
+    description: "View file diff in delta (full screen)"
+    command: git -c core.pager='delta --side-by-side --paging=always' show "{{.SelectedLocalCommit.Hash}}" -- "{{.SelectedCommitFile.Name}}"
+    output: terminal
 
 promptToReturnFromSubprocess: false
 disableStartupPopups: true
