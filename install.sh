@@ -23,5 +23,7 @@ link "$DOTFILES/sketchybar"           "$HOME/.config/sketchybar"
 link "$DOTFILES/skhd"                 "$HOME/.config/skhd"
 link "$DOTFILES/yabai"                "$HOME/.config/yabai"
 link "$DOTFILES/claude/statusline.sh" "$HOME/.claude/statusline.sh"
+# lazygit: config.yml only — lazygit writes state.yml next to it, leave that alone
+link "$DOTFILES/lazygit/config.yml"   "$HOME/Library/Application Support/lazygit/config.yml"
 
 echo "Done."

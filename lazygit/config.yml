@@ -1,0 +1,78 @@
+# lazygit — Vesper edition
+# Matches the Vesper theme + Hack Nerd Font used in Ghostty.
+# Tuned for comfortably reading diffs produced by Claude Code.
+
+gui:
+  # ── Appearance ────────────────────────────────────────
+  nerdFontsVersion: "3"
+  showFileIcons: true
+  border: rounded
+  animateExplosion: false
+
+  # ── Layout: narrow sidebar, wide diff ─────────────────
+  sidePanelWidth: 0.2
+  mainPanelSplitMode: flexible
+  # Expand the sidebar while it's focused, shrink it again on leave
+  expandFocusedSidePanel: true
+  expandedSidePanelWeight: 2
+
+  # ── Less noise ────────────────────────────────────────
+  showCommandLog: false
+  showRandomTip: false
+
+  # ── File list ─────────────────────────────────────────
+  showFileTree: true
+  showRootItemInFileTree: false
+  showNumstatInFilesView: true   # +x/-y per file
+  showDivergenceFromBaseBranch: arrowAndNumber
+  showBranchCommitHash: true
+
+  # ── Reading comfort ───────────────────────────────────
+  scrollHeight: 4
+  scrollOffMargin: 3
+  wrapLinesInStagingView: true
+  filterMode: fuzzy
+  timeFormat: "2006-01-02"
+  shortTimeFormat: "15:04"
+
+  # ── Vesper palette ────────────────────────────────────
+  theme:
+    activeBorderColor: ["#ffc799", bold]
+    inactiveBorderColor: ["#343434"]
+    searchingActiveBorderColor: ["#99ffe4", bold]
+    optionsTextColor: ["#8b8b8b"]
+    selectedLineBgColor: ["#232323"]
+    inactiveViewSelectedLineBgColor: ["#1b1b1b"]
+    cherryPickedCommitFgColor: ["#101010"]
+    cherryPickedCommitBgColor: ["#ffc799"]
+    markedBaseCommitFgColor: ["#101010"]
+    markedBaseCommitBgColor: ["#99ffe4"]
+    unstagedChangesColor: ["#ff8080"]
+    defaultFgColor: ["#e6e6e6"]
+
+git:
+  # ── Pagers: cycle through them with '|' ───────────────
+  # 1) delta unified   2) delta side-by-side   3) raw git diff
+  # Delta's colors come from the [delta] block in ~/.gitconfig.
+  pagers:
+    - pager: delta --dark --paging=never
+      colorArg: always
+    - pager: delta --dark --paging=never --side-by-side
+      colorArg: always
+    - colorArg: always
+
+  # 5 lines of context instead of 3, to see what surrounds a change
+  diffContextSize: 5
+  parseEmoji: true
+  mainBranches: [main, master, develop]
+  log:
+    order: topo-order
+    showGraph: always
+
+refresher:
+  # Refresh more often since Claude Code edits files in the background
+  refreshInterval: 5
+  fetchInterval: 60
+
+promptToReturnFromSubprocess: false
+disableStartupPopups: true
