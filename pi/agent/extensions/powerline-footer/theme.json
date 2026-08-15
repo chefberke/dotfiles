@@ -1,0 +1,33 @@
+{
+  "colors": {
+    "path": "#8b8b8b",
+    "model": "#8b8b8b",
+    "thinking": "#6e6e6e",
+    "shellMode": "#99ffe4",
+    "gitClean": "#7e7e7e",
+    "gitDirty": "#7e7e7e",
+    "context": "#7e7e7e",
+    "contextWarn": "#e6b99d",
+    "contextError": "#ff8080",
+    "cost": "#7e7e7e",
+    "tokens": "#7e7e7e",
+    "queue": "#8b8b8b",
+    "separator": "#3d3d3d",
+    "border": "#343434"
+  },
+  "icons": {
+    "model": "",
+    "folder": "",
+    "context": "",
+    "cost": "",
+    "tokens": "",
+    "input": "",
+    "output": "",
+    "cache": "",
+    "session": "",
+    "host": "",
+    "time": "",
+    "agents": "",
+    "auto": "↯"
+  }
+}

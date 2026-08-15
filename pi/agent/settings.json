@@ -1,0 +1,75 @@
+{
+  "lastChangelogVersion": "0.84.2",
+  "theme": "vesper",
+  "quietStartup": true,
+  "tuiMode": "fullscreen",
+  "fullscreenScrollbar": "auto",
+  "packages": [
+    "npm:pi-mcp-adapter",
+    "npm:pi-web-access",
+    "npm:pi-subagents",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@narumitw/pi-plan-mode",
+    "npm:pi-background-tasks",
+    "npm:@ff-labs/pi-fff",
+    "npm:pi-lens",
+    "npm:@narumitw/pi-btw",
+    "npm:pi-powerline-footer",
+    "npm:pi-clarify"
+  ],
+  "powerline": {
+    "preset": "default",
+    "placement": "below",
+    "welcome": false,
+    "separator": "pipe",
+    "layout": {
+      "left": [
+        "custom:cc-path",
+        "custom:cc-model",
+        "custom:cc-git"
+      ],
+      "right": [
+        "queue",
+        "context_pct"
+      ],
+      "secondary": []
+    },
+    "customItems": [
+      {
+        "id": "cc-path",
+        "statusKey": "cc-path",
+        "position": "left"
+      },
+      {
+        "id": "cc-model",
+        "statusKey": "cc-model",
+        "position": "left"
+      },
+      {
+        "id": "cc-git",
+        "statusKey": "cc-git",
+        "position": "left"
+      },
+      {
+        "id": "lsp",
+        "statusKey": "pi-lens-lsp",
+        "position": "right",
+        "excludeFromExtensionStatuses": true
+      }
+    ],
+    "disabledSegments": [
+      "path",
+      "model",
+      "thinking",
+      "git",
+      "cost",
+      "custom:lsp"
+    ],
+    "context": {
+      "format": "percent"
+    }
+  },
+  "defaultThinkingLevel": "high",
+  "hideThinkingBlock": false
+}
