@@ -5,7 +5,6 @@
   "tuiMode": "fullscreen",
   "fullscreenScrollbar": "auto",
   "packages": [
-    "npm:pi-mcp-adapter",
     "npm:pi-web-access",
     "npm:pi-subagents",
     "npm:@juicesharp/rpiv-todo",
@@ -14,7 +13,6 @@
     "npm:pi-background-tasks",
     "npm:@ff-labs/pi-fff",
     "npm:pi-lens",
-    "npm:@narumitw/pi-btw",
     "npm:pi-powerline-footer",
     "npm:pi-clarify"
   ],
@@ -70,6 +68,6 @@
       "format": "percent"
     }
   },
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "medium",
   "hideThinkingBlock": false
 }
